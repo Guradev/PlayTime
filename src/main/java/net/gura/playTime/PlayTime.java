@@ -1,5 +1,6 @@
 package net.gura.playTime;
 
+import net.gura.playTime.commands.Playtime;
 import net.gura.playTime.configs.ConfigManager;
 import net.gura.playTime.database.MySQL.MySQLStorage;
 import net.gura.playTime.papi.PlaytimeExpansion;
@@ -18,11 +19,12 @@ public final class PlayTime extends JavaPlugin {
     @Override
     public void onEnable() {
         config.saveDefaultConfig();
-
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new PlaytimeExpansion(playtimeManager).register();
             Bukkit.getLogger().info("[PlayTime] PlaceholderAPI hooked successfully.");
         }
+
+        getCommand("playtime").setExecutor(new Playtime());
         getServer().getConsoleSender().sendMessage("[PlayTime] plugin enabled");
     }
 

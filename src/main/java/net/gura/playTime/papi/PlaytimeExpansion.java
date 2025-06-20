@@ -31,18 +31,12 @@ public class PlaytimeExpansion extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player player, String args) {
-        if (player == null) return "";
+        if (player == null || args == null) return "";
         long playtime = playtimeManager.getPlaytime(player.getUniqueId());
 
-        switch(args.toLowerCase()) {
-            case "seconds":
-            case "minutes":
-            case "hours":
-            case "days":
-                return TimeFormat.formatUnit(playtime, args);
-            case "dynamic":
-            default:
-                return TimeFormat.formatPlaytime(playtime);
-        }
+        return switch (args.toLowerCase()) {
+            case "seconds", "minutes", "hours", "days" -> TimeFormat.formatUnit(playtime, args);
+            default -> TimeFormat.formatPlaytime(playtime);
+        };
     }
 }
