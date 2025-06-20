@@ -1,0 +1,8 @@
+name: PlayTime
+version: '1.0'
+main: net.gura.playTime.PlayTime
+api-version: '1.13'
+load: STARTUP
+authors: [ Gura ]
+softdepend: [PlaceholderAPI]
+description: Playtime minecraft plugin

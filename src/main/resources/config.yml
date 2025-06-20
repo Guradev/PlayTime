@@ -1,0 +1,16 @@
+#
+#
+# PLAYTIME PLUGIN
+# Made by Gura1
+#
+database:
+  type:
+  mysql:
+    host:
+    port:
+    database-name:
+    username:
+    password:
+  mongo:
+    uri:
+    database:
