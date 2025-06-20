@@ -29,8 +29,6 @@ public class DatabaseManager {
         switch (dbType) {
             case MYSQL:
                 break;
-            case MONGODB:
-                break;
             default:
                 throw new IllegalStateException("Unhandled database type: " + dbType);
         }

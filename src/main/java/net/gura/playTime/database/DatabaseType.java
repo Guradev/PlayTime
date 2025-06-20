@@ -1,6 +1,5 @@
 package net.gura.playTime.database;
 
 public enum DatabaseType {
-    MYSQL,
-    MONGODB
+    MYSQL
 }
