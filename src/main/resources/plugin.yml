@@ -10,10 +10,13 @@ description: Playtime minecraft plugin
 commands:
   playtime:
     description: Playtime plugin command
-    usage: /playtime <set|delete> <player> [seconds]
+    usage: /playtime <player> <set|delete> <player> [seconds]
     permission: playtime.admin
 
 permissions:
   playtime.admin:
     description: Playtime admin permission
+    default: op
+  playtime.user:
+    description: Playtime user permission
     default: op

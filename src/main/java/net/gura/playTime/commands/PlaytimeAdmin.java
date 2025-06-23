@@ -1,6 +1,8 @@
 package net.gura.playTime.commands;
 
 import net.gura.playTime.util.PlaytimeManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -19,9 +21,13 @@ public class PlaytimeAdmin implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, String @NotNull [] args) {
+        if (!sender.hasPermission("playtime.admin")) {
+            sender.sendMessage((Component.text("You do not have permission to do this!")).color(NamedTextColor.RED));
+            return true;
+        }
         if (args.length < 2) {
-            sender.sendMessage("§cUsage: /playtime <set|delete> <player> [seconds]");
+            sender.sendMessage(Component.text("Usage: /playtime <set|delete> <player> [seconds]").color(NamedTextColor.RED));
             return true;
         }
         String subCommand = args[0].toLowerCase();
@@ -31,25 +37,25 @@ public class PlaytimeAdmin implements CommandExecutor {
         switch (subCommand) {
             case "set" -> {
                 if (args.length < 3) {
-                    sender.sendMessage("§cUsage: /playtime set <player> <seconds>");
+                    sender.sendMessage((Component.text("Usage: /playtime set <player> <seconds>").color(NamedTextColor.RED)));
                     return true;
                 }
 
                 try {
                     long seconds = Long.parseLong(args[2]);
                     playtimeManager.setPlaytime(uuid, seconds);
-                    sender.sendMessage("§aPlaytime for " + player.getName() + " set to " + seconds + " seconds.");
+                    sender.sendMessage(Component.text("Playtime for " + player.getName() + " set to " + seconds + " seconds.").color(NamedTextColor.GREEN));
                 } catch (NumberFormatException e) {
-                    sender.sendMessage("§cInvalid number: " + args[2]);
+                    sender.sendMessage(Component.text("Invalid number: "+ args[2]).color(NamedTextColor.RED));
                 }
             }
 
             case "delete" -> {
                 playtimeManager.deletePlaytime(uuid);
-                sender.sendMessage("§aPlaytime for " + player.getName() + " has been deleted.");
+                sender.sendMessage(Component.text("Playtime for " + player.getName() + " deleted.").color(NamedTextColor.GREEN));
             }
 
-            default -> sender.sendMessage("§cUse set or delete, invalid argument.");
+            default -> sender.sendMessage(Component.text("Use set or delete, invalid argument."));
         }
         return true;
     }
