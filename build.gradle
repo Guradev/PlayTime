@@ -68,6 +68,4 @@ processResources {
 
 shadowJar {
     archiveClassifier.set('')
-    relocate 'org.sqlite', 'net.gura.libs.sqlite'
-    relocate 'com.zaxxer.hikari', 'net.gura.libs.hikari'
 }

@@ -26,7 +26,7 @@ public final class PlayTime extends JavaPlugin {
             Bukkit.getLogger().info("[PlayTime] PlaceholderAPI hooked successfully.");
         }
 
-        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerListener(playtimeManager), this);
 
         getCommand("playtime").setExecutor(new PlaytimeAdmin(playtimeManager));
         getServer().getConsoleSender().sendMessage("[PlayTime] plugin enabled");

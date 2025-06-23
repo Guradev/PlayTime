@@ -8,7 +8,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener {
-    private PlaytimeManager playtimeManager;
+    private final PlaytimeManager playtimeManager;
+
+    public PlayerListener(PlaytimeManager playtimeManager) {
+        this.playtimeManager = playtimeManager;
+    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
