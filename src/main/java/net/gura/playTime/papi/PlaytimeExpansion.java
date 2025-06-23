@@ -35,7 +35,8 @@ public class PlaytimeExpansion extends PlaceholderExpansion {
         long playtime = playtimeManager.getPlaytime(player.getUniqueId());
 
         return switch (args.toLowerCase()) {
-            case "seconds", "minutes", "hours", "days" -> TimeFormat.formatUnit(playtime, args);
+            case "seconds_full", "minutes_full", "hours_full", "days_full" -> TimeFormat.formatUnit(playtime, args.replace("_full", ""));
+            case "seconds", "minutes", "hours", "days" -> TimeFormat.formatUnitSuffix(playtime, args);
             default -> TimeFormat.formatPlaytime(playtime);
         };
     }
