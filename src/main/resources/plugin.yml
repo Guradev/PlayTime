@@ -2,7 +2,7 @@ name: PlayTime
 version: '1.0'
 main: net.gura.playTime.PlayTime
 api-version: '1.21'
-load: STARTUP
+load: POSTWORLD
 authors: [ Gura ]
 softdepend: [PlaceholderAPI]
 description: Playtime minecraft plugin
