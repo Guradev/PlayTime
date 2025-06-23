@@ -1,11 +1,9 @@
 #
-#
 # PLAYTIME PLUGIN
 # Made by Gura1
 #
 database:
-  enabled: false
-  type: MYSQL
+  type: MYSQL # MYSQL or SQLite (More coming soon)
   mysql:
     host: localhost
     port: 3306

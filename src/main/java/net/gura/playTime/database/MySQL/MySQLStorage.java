@@ -13,9 +13,9 @@ public class MySQLStorage implements PlaytimeStorage {
 
     private final MySQLManager manager;
 
-    public MySQLStorage(ConfigurationSection config) {
-        this.manager = new MySQLManager(config);
-
+    public MySQLStorage(MySQLManager manager) {
+        this.manager = manager;
+        createTableIfNotExists();
     }
 
     private void createTableIfNotExists() {
