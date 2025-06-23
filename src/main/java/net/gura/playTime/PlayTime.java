@@ -30,13 +30,13 @@ public final class PlayTime extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerListener(playtimeManager), this);
 
         getCommand("playtime").setExecutor(new PlaytimeCommand(playtimeManager));
-        getServer().getConsoleSender().sendMessage("[PlayTime] plugin enabled");
+        getServer().getConsoleSender().sendMessage("[PlayTime] Plugin enabled successfully");
     }
 
     @Override
     public void onDisable() {
         playtimeManager.saveAllSync();
-        getServer().getConsoleSender().sendMessage("[PlayTime] plugin disabled");
+        getServer().getConsoleSender().sendMessage("[PlayTime] Plugin disabled successfully");
     }
 
     public PlaytimeManager getPlaytimeManager() {
