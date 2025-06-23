@@ -1,6 +1,6 @@
 package net.gura.playTime;
 
-import net.gura.playTime.commands.PlaytimeAdmin;
+import net.gura.playTime.commands.PlaytimeCommand;
 import net.gura.playTime.database.DatabaseManager;
 import net.gura.playTime.listener.PlayerListener;
 import net.gura.playTime.papi.PlaytimeExpansion;
@@ -28,7 +28,7 @@ public final class PlayTime extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerListener(playtimeManager), this);
 
-        getCommand("playtime").setExecutor(new PlaytimeAdmin(playtimeManager));
+        getCommand("playtime").setExecutor(new PlaytimeCommand(playtimeManager));
         getServer().getConsoleSender().sendMessage("[PlayTime] plugin enabled");
     }
 
