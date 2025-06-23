@@ -44,14 +44,12 @@ public class PlaytimeManager {
         loginTimes.remove(uuid);
     }
 
-    public void saveAll() {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+    public void saveAllSync() {
             for (Map.Entry<UUID, Long> entry : playtimeCache.entrySet()) {
                 UUID uuid = entry.getKey();
                 long time = entry.getValue() + getSessionTime(uuid);
                 playtimeStorage.savePlaytime(uuid, time);
             }
-        });
     }
 
     // Get current playtime (includes session)

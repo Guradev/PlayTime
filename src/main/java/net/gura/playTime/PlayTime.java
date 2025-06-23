@@ -6,6 +6,7 @@ import net.gura.playTime.listener.PlayerListener;
 import net.gura.playTime.papi.PlaytimeExpansion;
 import net.gura.playTime.util.PlaytimeManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PlayTime extends JavaPlugin {
@@ -34,9 +35,7 @@ public final class PlayTime extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (playtimeManager != null) {
-            playtimeManager.saveAll();
-        }
+        playtimeManager.saveAllSync();
         getServer().getConsoleSender().sendMessage("[PlayTime] plugin disabled");
     }
 
