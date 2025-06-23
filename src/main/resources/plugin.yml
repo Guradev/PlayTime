@@ -1,8 +1,19 @@
 name: PlayTime
 version: '1.0'
 main: net.gura.playTime.PlayTime
-api-version: '1.13'
+api-version: '1.21'
 load: STARTUP
 authors: [ Gura ]
 softdepend: [PlaceholderAPI]
 description: Playtime minecraft plugin
+
+commands:
+  playtime:
+    description: Playtime plugin command
+    usage: /playtime <set|delete> <player> [seconds]
+    permission: playtime.admin
+
+permissions:
+  playtime.admin:
+    description: Playtime admin permission
+    default: op

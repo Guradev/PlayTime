@@ -30,8 +30,8 @@ public class PlaytimeExpansion extends PlaceholderExpansion {
     }
 
     @Override
-    public String onPlaceholderRequest(Player player, String args) {
-        if (player == null || args == null) return "";
+    public String onPlaceholderRequest(Player player, @NotNull String args) {
+        if (player == null) return "";
         long playtime = playtimeManager.getPlaytime(player.getUniqueId());
 
         return switch (args.toLowerCase()) {

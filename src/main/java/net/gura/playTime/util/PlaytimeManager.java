@@ -37,9 +37,11 @@ public class PlaytimeManager {
         UUID uuid = player.getUniqueId();
         long seconds = getSessionTime(uuid);
         playtimeCache.merge(uuid, seconds, Long::sum);
+        long totalPlaytime = playtimeCache.get(uuid);
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            playtimeStorage.savePlaytime(uuid, seconds);
+            playtimeStorage.savePlaytime(uuid, totalPlaytime);
         });
+        loginTimes.remove(uuid);
     }
 
     public void saveAll() {

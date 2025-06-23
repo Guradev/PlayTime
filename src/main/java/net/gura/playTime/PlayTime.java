@@ -1,7 +1,8 @@
 package net.gura.playTime;
 
-import net.gura.playTime.commands.Playtime;
+import net.gura.playTime.commands.PlaytimeAdmin;
 import net.gura.playTime.database.DatabaseManager;
+import net.gura.playTime.listener.PlayerListener;
 import net.gura.playTime.papi.PlaytimeExpansion;
 import net.gura.playTime.util.PlaytimeManager;
 import org.bukkit.Bukkit;
@@ -25,7 +26,9 @@ public final class PlayTime extends JavaPlugin {
             Bukkit.getLogger().info("[PlayTime] PlaceholderAPI hooked successfully.");
         }
 
-        getCommand("playtime").setExecutor(new Playtime());
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
+        getCommand("playtime").setExecutor(new PlaytimeAdmin(playtimeManager));
         getServer().getConsoleSender().sendMessage("[PlayTime] plugin enabled");
     }
 

@@ -17,14 +17,14 @@ public class DatabaseManager {
     public DatabaseManager(JavaPlugin plugin) {
         FileConfiguration config = plugin.getConfig();
 
-        String typeName = config.getString("database.type", "SQLITE").toUpperCase();
+        String typeName = config.getString("database.type", "SQLite").toUpperCase();
         DatabaseType dbType;
 
         try {
             dbType = DatabaseType.valueOf(typeName);
         } catch (IllegalArgumentException e) {
             plugin.getLogger().warning("Invalid database type in config: " + typeName);
-            plugin.getLogger().warning("Falling back to SQLITE.");
+            plugin.getLogger().warning("Falling back to SQLite.");
             dbType = DatabaseType.SQLITE;
         }
 

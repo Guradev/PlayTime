@@ -3,7 +3,7 @@
 # Made by Gura1
 #
 database:
-  type: MYSQL # MYSQL or SQLite (More coming soon)
+  type: SQLite # MYSQL or SQLite (More coming soon)
   mysql:
     host: localhost
     port: 3306
