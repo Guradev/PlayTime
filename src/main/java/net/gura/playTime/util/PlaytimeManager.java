@@ -1,6 +1,7 @@
 package net.gura.playTime.util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -65,11 +66,17 @@ public class PlaytimeManager {
     }
 
     public void deletePlaytime(UUID uuid) {
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
         playtimeCache.remove(uuid);
         loginTimes.remove(uuid);
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             playtimeStorage.deletePlaytime(uuid);
         });
+        if (offlinePlayer.hasPlayedBefore()) {
+            handleJoin(offlinePlayer.getPlayer());
+        } else {
+            Bukkit.getLogger().info("[PlayTime] " + offlinePlayer.getName() + " has not joined the server before.");
+        }
     }
 
     private long getSessionTime(UUID uuid) {
