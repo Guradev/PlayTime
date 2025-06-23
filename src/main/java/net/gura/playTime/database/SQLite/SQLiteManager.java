@@ -26,11 +26,11 @@ public class SQLiteManager {
             }
 
             File dbFile = new File(plugin.getDataFolder(), "playtime.db");
-            String jdbcUrl = "jdbc:sqlite:" + dbFile.getAbsolutePath();
 
             HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(jdbcUrl);
-            config.setPoolName("SQLite");
+
+            config.setDataSourceClassName("org.sqlite.SQLiteDataSource");
+            config.addDataSourceProperty("url", "jdbc:sqlite:" + dbFile.getAbsolutePath());
 
             config.setMaximumPoolSize(1);
             config.setMinimumIdle(1);

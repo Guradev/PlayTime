@@ -2,7 +2,6 @@ package net.gura.playTime.database.MySQL;
 
 import net.gura.playTime.util.PlaytimeStorage;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

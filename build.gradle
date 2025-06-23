@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("com.gradleup.shadow") version "9.0.0-beta17"
 }
 
 group = 'net.gura'
@@ -24,7 +25,8 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.6-R0.1-SNAPSHOT")
     compileOnly 'me.clip:placeholderapi:2.11.6'
-    compileOnly 'com.zaxxer:HikariCP:4.0.3'
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+    implementation 'org.xerial:sqlite-jdbc:3.50.1.0'
 }
 
 tasks {
@@ -62,4 +64,10 @@ processResources {
     filesMatching('plugin.yml') {
         expand props
     }
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    relocate 'org.sqlite', 'net.gura.libs.sqlite'
+    relocate 'com.zaxxer.hikari', 'net.gura.libs.hikari'
 }
