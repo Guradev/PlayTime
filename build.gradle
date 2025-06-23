@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.6-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly 'me.clip:placeholderapi:2.11.6'
     implementation 'com.zaxxer:HikariCP:4.0.3'
     implementation 'org.xerial:sqlite-jdbc:3.50.1.0'
@@ -68,4 +68,8 @@ processResources {
 
 shadowJar {
     archiveClassifier.set('')
+
+    dependencies {
+        exclude(dependency("me.clip:placeholderapi:2.11.6"))
+    }
 }

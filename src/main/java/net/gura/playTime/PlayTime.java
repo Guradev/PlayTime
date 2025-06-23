@@ -20,13 +20,16 @@ public final class PlayTime extends JavaPlugin {
         DatabaseManager databaseManager = new DatabaseManager(this);
         playtimeManager = new PlaytimeManager(this, databaseManager.getStorage());
 
-        // PlaceholderAPI expansion
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            new PlaytimeExpansion(playtimeManager).register();
-            Bukkit.getLogger().info("[PlayTime] PlaceholderAPI hooked successfully.");
-        }
-
         getServer().getPluginManager().registerEvents(new PlayerListener(playtimeManager), this);
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            Bukkit.getScheduler().runTaskLater(this, () -> {
+                new PlaytimeExpansion(playtimeManager).register();
+                Bukkit.getConsoleSender().sendMessage("[PlayTime] PlaceholderAPI hooked successfully.");
+            }, 1L);
+        } else {
+            Bukkit.getConsoleSender().sendMessage("[PlayTime] PlaceholderAPI not found. PlaceholderAPI expansion disabled.");
+        }
 
         getCommand("playtime").setExecutor(new PlaytimeCommand(playtimeManager));
         getServer().getConsoleSender().sendMessage("[PlayTime] Plugin enabled successfully");

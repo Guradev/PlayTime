@@ -15,18 +15,28 @@ public class PlaytimeExpansion extends PlaceholderExpansion {
     }
 
     @Override
-    public @NotNull String getIdentifier() {
-        return "playtime";
-    }
-
-    @Override
     public @NotNull String getAuthor() {
         return "Gura";
     }
 
     @Override
+    public @NotNull String getIdentifier() {
+        return "playtime";
+    }
+
+    @Override
     public @NotNull String getVersion() {
-        return "0.1";
+        return "1.0";
+    }
+
+    @Override
+    public boolean persist() {
+        return true;
+    }
+
+    @Override
+    public boolean canRegister() {
+        return playtimeManager != null;
     }
 
     @Override
