@@ -24,12 +24,14 @@ public class PlaytimeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] args) {
+
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Only players can use this command.");
                 return true;
             }
-            if (!sender.hasPermission("playtime.user")) {
+
+            if (!sender.hasPermission("playtime.view")) {
                 sender.sendMessage(Component.text("You do not have permission to do this!").color(NamedTextColor.RED));
                 return true;
             }
@@ -40,19 +42,35 @@ public class PlaytimeCommand implements CommandExecutor {
             return true;
         }
 
-        if (!sender.hasPermission("playtime.admin")) {
-            sender.sendMessage(Component.text("You do not have permission to do this!").color(NamedTextColor.RED));
-            return true;
-        }
-
         if (args.length < 2) {
-            sender.sendMessage(Component.text("Usage: /playtime <set|delete|get> <player> [seconds]").color(NamedTextColor.RED));
+            sender.sendMessage(Component.text("Usage: /playtime <get|set|delete> <player> [seconds]").color(NamedTextColor.RED));
             return true;
         }
 
         String subCommand = args[0].toLowerCase();
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-        UUID uuid = player.getUniqueId();
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+        UUID uuid = target.getUniqueId();
+
+        if (subCommand.equals("get")) {
+            if (!sender.hasPermission("playtime.view.others")) {
+                sender.sendMessage(Component.text("You do not have permission to use this command.").color(NamedTextColor.RED));
+                return true;
+            }
+
+            if (!target.hasPlayedBefore()) {
+                sender.sendMessage(Component.text(target.getName() + " has not joined the server.").color(NamedTextColor.RED));
+                return true;
+            }
+
+            long seconds = playtimeManager.getPlaytime(uuid);
+            sender.sendMessage(Component.text(target.getName() + "'s playtime is " + TimeFormat.formatPlaytime(seconds)).color(NamedTextColor.GREEN));
+            return true;
+        }
+
+        if (!sender.hasPermission("playtime.admin")) {
+            sender.sendMessage(Component.text("You do not have permission to do this!").color(NamedTextColor.RED));
+            return true;
+        }
 
         switch (subCommand) {
             case "set" -> {
@@ -60,37 +78,28 @@ public class PlaytimeCommand implements CommandExecutor {
                     sender.sendMessage(Component.text("Usage: /playtime set <player> <seconds>").color(NamedTextColor.RED));
                     return true;
                 }
+
                 Player onlinePlayer = Bukkit.getPlayer(uuid);
-                if (onlinePlayer != null && !onlinePlayer.isOnline()) {
-                    sender.sendMessage(Component.text("[Playtime] " + onlinePlayer + " is not online.").color(NamedTextColor.RED));
+                if (onlinePlayer == null || !onlinePlayer.isOnline()) {
+                    sender.sendMessage(Component.text(target.getName() + " must be online to set playtime.").color(NamedTextColor.RED));
+                    return true;
                 }
-                
+
                 try {
                     long seconds = Long.parseLong(args[2]);
                     playtimeManager.setPlaytime(uuid, seconds);
-                    sender.sendMessage(Component.text("Playtime for " + player.getName() + " set to " + seconds + " seconds.").color(NamedTextColor.GREEN));
+                    sender.sendMessage(Component.text("Playtime for " + target.getName() + " set to " + seconds + " seconds.").color(NamedTextColor.GREEN));
                 } catch (NumberFormatException e) {
-                    sender.sendMessage(Component.text("Invalid number: " + args[2]).color(NamedTextColor.RED));
+                    sender.sendMessage(Component.text("You typed an invalid number. Try again").color(NamedTextColor.RED));
                 }
             }
 
             case "delete" -> {
                 playtimeManager.deletePlaytime(uuid);
-                sender.sendMessage(Component.text("Playtime for " + player.getName() + " deleted.").color(NamedTextColor.GREEN));
+                sender.sendMessage(Component.text("Playtime for " + target.getName() + " deleted.").color(NamedTextColor.GREEN));
             }
 
             default -> sender.sendMessage(Component.text("Invalid subcommand. Use: set, delete or get").color(NamedTextColor.RED));
-        }
-        if (args.length == 2 && args[0].equalsIgnoreCase("get")) {
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
-            if (!target.hasPlayedBefore()) {
-                sender.sendMessage(Component.text(target.getName() + " has not joined the server.").color(NamedTextColor.RED));
-                return true;
-            }
-            UUID getuuid = target.getUniqueId();
-            long seconds = playtimeManager.getPlaytime(getuuid);
-            sender.sendMessage(Component.text(target.getName() + "'s playtime is " + TimeFormat.formatPlaytime(seconds)).color(NamedTextColor.GREEN));
-            return true;
         }
         return true;
     }

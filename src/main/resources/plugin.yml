@@ -17,6 +17,9 @@ permissions:
   playtime.admin:
     description: Playtime admin permission
     default: op
-  playtime.user:
-    description: Playtime user permission
+  playtime.view:
+    description: Playtime view own permission
+    default: op
+  playtime.view.others:
+    description: Playtime view others permission
     default: op
