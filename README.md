@@ -46,7 +46,8 @@ database:
 
 ## 💬 Commands
 Here are the commands available along their required permission. OP's get every permission!
-- /playtime get <player> View your own playtime or another player's playtime	playtime.view
+- /playtime View your own playtime playtime.view
+- /playtime get <player> View another player's playtime	playtime.view.others
 - /playtime set/delete <player> <seconds>	Set a player’s total playtime in seconds or delete their playtime completely playtime.admin
 
 🎯 The following commands for players are planned:
