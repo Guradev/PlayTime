@@ -60,7 +60,11 @@ public class PlaytimeCommand implements CommandExecutor {
                     sender.sendMessage(Component.text("Usage: /playtime set <player> <seconds>").color(NamedTextColor.RED));
                     return true;
                 }
-
+                Player onlinePlayer = Bukkit.getPlayer(uuid);
+                if (onlinePlayer != null && !onlinePlayer.isOnline()) {
+                    sender.sendMessage(Component.text("[Playtime] " + onlinePlayer + " is not online.").color(NamedTextColor.RED));
+                }
+                
                 try {
                     long seconds = Long.parseLong(args[2]);
                     playtimeManager.setPlaytime(uuid, seconds);

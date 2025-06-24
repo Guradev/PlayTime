@@ -59,11 +59,18 @@ public class PlaytimeManager {
     }
 
     public void setPlaytime(UUID uuid, long seconds) {
+        Player player = Bukkit.getPlayer(uuid);
         playtimeCache.put(uuid, seconds);
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            playtimeStorage.savePlaytime(uuid, seconds);
+
+        if (player != null && player.isOnline()) {
+            loginTimes.put(uuid, System.currentTimeMillis());
+        }
+
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                playtimeStorage.savePlaytime(uuid, seconds);
         });
     }
+
 
     public void deletePlaytime(UUID uuid) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
