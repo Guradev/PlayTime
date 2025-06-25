@@ -15,7 +15,6 @@ public class PlaytimeManager {
     // Caches en memoria
     private final Map<UUID, Long> playtimeCache = new ConcurrentHashMap<>();
     private final Map<UUID, Long> loginTimes = new ConcurrentHashMap<>();
-    Map<String, String> placeholders = new HashMap<>();
 
     // Referencias al database handler
     private final PlaytimeStorage playtimeStorage;
@@ -39,8 +38,11 @@ public class PlaytimeManager {
     public void handleQuit(Player player) {
         UUID uuid = player.getUniqueId();
         long seconds = getSessionTime(uuid);
+
         playtimeCache.merge(uuid, seconds, Long::sum);
         long totalPlaytime = playtimeCache.get(uuid);
+
+        // Guardando playtime en async
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             playtimeStorage.savePlaytime(uuid, totalPlaytime);
         });
@@ -75,17 +77,16 @@ public class PlaytimeManager {
 
 
     public void deletePlaytime(UUID uuid) {
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-
-        placeholders.put("player", Bukkit.getOfflinePlayer(uuid).getName());
-
         playtimeCache.remove(uuid);
         loginTimes.remove(uuid);
+
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             playtimeStorage.deletePlaytime(uuid);
         });
-        if (offlinePlayer.hasPlayedBefore()) {
-            handleJoin(offlinePlayer.getPlayer());
+
+        Player player = Bukkit.getPlayer(uuid);
+        if (player != null && player.isOnline()) {
+            handleJoin(player);
         }
     }
 

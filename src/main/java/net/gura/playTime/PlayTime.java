@@ -4,7 +4,9 @@ import net.gura.playTime.commands.PlaytimeCommand;
 import net.gura.playTime.configs.MessageHandler;
 import net.gura.playTime.database.DatabaseManager;
 import net.gura.playTime.database.MySQL.MySQLManager;
+import net.gura.playTime.database.MySQL.MySQLStorage;
 import net.gura.playTime.database.SQLite.SQLiteManager;
+import net.gura.playTime.database.SQLite.SQLiteStorage;
 import net.gura.playTime.listener.PlayerListener;
 import net.gura.playTime.papi.PlaytimeExpansion;
 import net.gura.playTime.util.PlaytimeManager;
@@ -26,6 +28,12 @@ public final class PlayTime extends JavaPlugin {
         messageHandler = new MessageHandler(this);
         DatabaseManager databaseManager = new DatabaseManager(this);
         playtimeManager = new PlaytimeManager(this, databaseManager.getStorage());
+
+        if (databaseManager.getStorage() instanceof SQLiteStorage sqlite) {
+            this.sqliteManager = sqlite.getManager();
+        } else if (databaseManager.getStorage() instanceof MySQLStorage mysql) {
+            this.mySQLManager = mysql.getManager();
+        }
 
         getServer().getPluginManager().registerEvents(new PlayerListener(playtimeManager), this);
 

@@ -61,6 +61,7 @@ public class PlaytimeCommand implements CommandExecutor {
         UUID uuid = target.getUniqueId();
 
         placeholders.put("player", target.getName());
+        placeholders.put("playtime", TimeFormat.formatPlaytime(playtimeManager.getPlaytime(uuid)));
 
         if (subCommand.equals("get")) {
             if (!sender.hasPermission("playtime.view.others")) {
@@ -69,7 +70,7 @@ public class PlaytimeCommand implements CommandExecutor {
             }
 
             if (!target.hasPlayedBefore()) {
-                sender.sendMessage(messageHandler.get("not.joined", placeholders));
+                sender.sendMessage(messageHandler.get("not-joined", placeholders));
                 return true;
             }
 
@@ -98,6 +99,10 @@ public class PlaytimeCommand implements CommandExecutor {
                 try {
                     long seconds = Long.parseLong(args[2]);
                     playtimeManager.setPlaytime(uuid, seconds);
+
+                    placeholders.put("playtime", TimeFormat.formatPlaytime(seconds));
+                    placeholders.put("player", onlinePlayer.getName());
+
                     sender.sendMessage(messageHandler.get("success.set", placeholders));
                 } catch (NumberFormatException e) {
                     sender.sendMessage(messageHandler.get("invalid-number"));
@@ -106,7 +111,7 @@ public class PlaytimeCommand implements CommandExecutor {
 
             case "delete" -> {
                 if (!target.hasPlayedBefore()) {
-                    sender.sendMessage(messageHandler.get("not.joined", placeholders));
+                    sender.sendMessage(messageHandler.get("not-joined", placeholders));
                     return true;
                 }
                 playtimeManager.deletePlaytime(uuid);
