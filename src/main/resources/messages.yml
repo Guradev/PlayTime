@@ -1,0 +1,30 @@
+#
+# PLAYTIME PLUGIN - MESSAGES.yml (Change, update or translate messages of the plugin)
+# Made by Gura1
+#
+# ¡USES MINIMESSAGE!
+
+prefix: "<gray>[<green>PlayTime</green>]</gray> "
+
+only-players: "<red>Only players can use this command.</red>"
+no-permission: "<red>You do not have permission to do this!</red>"
+no-permission.others: "<red>You do not have permission to view other player's playtime!</red>"
+
+usage:
+  set: "<red>Usage: /playtime set <player> <seconds></red>"
+  delete: "<red>Usage: /playtime delete <player></red>"
+  get: "<red>Usage: /playtime get <player></red>"
+  base: "<red>Usage: /playtime <set|delete|get> <player> [seconds]</red>"
+
+not-joined: "<red><player> has not joined the server.</red>"
+invalid-number: "<red>You typed an invalid number.</red>"
+not-online: "<red><player> is not online.</red>"
+
+success:
+  view-own: "<green>Your playtime is <playtime></green>"
+  view-other: "<green><player>'s playtime is <playtime></green>"
+  set: "<green>Playtime for <player> set to <playtime></green>"
+  delete: "<green>Playtime for <player> deleted.</green>"
+
+error:
+  invalid-subcommand: "<red>Invalid subcommand. Use: set, delete or get.</red>"

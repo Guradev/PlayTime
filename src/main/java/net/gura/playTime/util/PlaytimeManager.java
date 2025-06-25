@@ -5,6 +5,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +15,7 @@ public class PlaytimeManager {
     // Caches en memoria
     private final Map<UUID, Long> playtimeCache = new ConcurrentHashMap<>();
     private final Map<UUID, Long> loginTimes = new ConcurrentHashMap<>();
+    Map<String, String> placeholders = new HashMap<>();
 
     // Referencias al database handler
     private final PlaytimeStorage playtimeStorage;
@@ -74,6 +76,9 @@ public class PlaytimeManager {
 
     public void deletePlaytime(UUID uuid) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+
+        placeholders.put("player", Bukkit.getOfflinePlayer(uuid).getName());
+
         playtimeCache.remove(uuid);
         loginTimes.remove(uuid);
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
@@ -81,8 +86,6 @@ public class PlaytimeManager {
         });
         if (offlinePlayer.hasPlayedBefore()) {
             handleJoin(offlinePlayer.getPlayer());
-        } else {
-            Bukkit.getLogger().info("[PlayTime] " + offlinePlayer.getName() + " has not joined the server before.");
         }
     }
 
