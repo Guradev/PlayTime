@@ -3,8 +3,6 @@ package net.gura.playTime.commands;
 import net.gura.playTime.configs.MessageHandler;
 import net.gura.playTime.util.PlaytimeManager;
 import net.gura.playTime.util.TimeFormat;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -86,7 +84,7 @@ public class PlaytimeCommand implements CommandExecutor {
         switch (subCommand) {
             case "set" -> {
                 if (args.length < 3) {
-                    sender.sendMessage(Component.text("Usage: /playtime set <player> <seconds>").color(NamedTextColor.RED));
+                    sender.sendMessage(messageHandler.get("usage.set"));
                     return true;
                 }
 

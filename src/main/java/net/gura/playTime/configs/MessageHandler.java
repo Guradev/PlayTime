@@ -21,8 +21,8 @@ public class MessageHandler {
     public MessageHandler(JavaPlugin plugin) {
         this.plugin = plugin;
         loadMessages();
-
     }
+
     private void loadMessages() {
         File file = new File(plugin.getDataFolder(), "messages.yml");
 

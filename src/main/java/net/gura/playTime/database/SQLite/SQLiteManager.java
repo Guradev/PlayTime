@@ -61,10 +61,6 @@ public class SQLiteManager {
         }
     }
 
-    public boolean isConnected() {
-        return isHealthy();
-    }
-
     public void close() {
         if (dataSource != null && !dataSource.isClosed()) {
             dataSource.close();
