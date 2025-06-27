@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![PAPI Support](https://img.shields.io/badge/PlaceholderAPI-Supported-blue.svg)](https://www.spigotmc.org/resources/placeholderapi.6245/)
 
-A lightweight and efficient Spigot **Minecraft plugin** to track player playtime with **PlaceholderAPI**, **MySQL**, **SQLite**, and more coming soon!
+A lightweight and efficient **Minecraft plugin** to track player playtime with **PlaceholderAPI**, **MySQL**, **SQLite**, and more coming soon!
 
 > ⚡ Built with performance and clean design in mind by **Gura1**.
 
