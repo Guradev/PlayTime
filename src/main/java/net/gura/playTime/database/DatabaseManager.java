@@ -1,5 +1,7 @@
 package net.gura.playTime.database;
 
+import net.gura.playTime.database.MongoDB.MongoDBManager;
+import net.gura.playTime.database.MongoDB.MongoDBStorage;
 import net.gura.playTime.database.MySQL.MySQLManager;
 import net.gura.playTime.database.MySQL.MySQLStorage;
 import net.gura.playTime.database.SQLite.SQLiteManager;
@@ -39,6 +41,13 @@ public class DatabaseManager {
                 SQLiteManager sqliteManager = new SQLiteManager(plugin);
                 this.playtimeStorage = new SQLiteStorage(sqliteManager);
                 Bukkit.getLogger().info("[PlayTime] Using SQLite database.");
+            }
+            case MONGODB -> {
+                // Add MongoDB case
+                ConfigurationSection dbConfig = config.getConfigurationSection("database.mongodb");
+                MongoDBManager mongoDBManager = new MongoDBManager(dbConfig);
+                this.playtimeStorage = new MongoDBStorage(mongoDBManager);
+                Bukkit.getLogger().info("[PlayTime] Using MongoDB database.");
             }
             default -> throw new IllegalStateException("Unhandled database type: " + dbType);
         }

@@ -6,6 +6,10 @@
 
 prefix: "<gray>[<green>PlayTime</green>]</gray> "
 
+gui's:
+  top:
+    title: "<gray>TOP PLAYTIME</gray>"
+
 only-players: "<red>Only players can use this command.</red>"
 no-permission: "<red>You do not have permission to do this!</red>"
 no-permission.others: "<red>You do not have permission to view other player's playtime!</red>"
